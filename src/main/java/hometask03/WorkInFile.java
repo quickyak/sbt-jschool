@@ -2,20 +2,35 @@ package hometask03;
 
 import java.io.FileNotFoundException;
 
+
+
 public class WorkInFile {
     public static void main(String[] args) throws FileNotFoundException {
+
+        //Вначале создадим файл, если он не существует
+        //Либо перезапишем его, если он уже есть
         FileInit fileInit = new FileInit();
-        fileInit.setDirName(System.getProperty("user.dir"));
+
+        fileInit.setDirName(System.getProperty("user.dir")); //в пользовательской директории
+        System.out.println(fileInit.getDirName());
+
         fileInit.setFileName("lesson03.txt");
-        fileInit.setText("This new text \nThis new text2\nThis new text3\nThis new text4\n");
+
+        String strText;
+        strText = "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
+        strText += "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
+        strText += "this new text2\nthis new text3\nThis new text4\nThis new text\nThis new text\n";
+        fileInit.setText(strText);
 
         //Запись в файл
-        //FileWorker.write( fileInit.getFileName(), fileInit.getText());
+        String fileName = fileInit.getFullName();
+        FileWorker.write(fileName, fileInit.getText());
 
+        //Читаем из файла
+        String strRead = FileWorker.read(fileName);
+        System.out.println(strRead);
     }
 }
-
-
 
 
 //Домашнее задание

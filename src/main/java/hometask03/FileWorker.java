@@ -2,10 +2,7 @@
 
 package hometask03;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class FileWorker {
     private static String dirName;
@@ -68,5 +65,43 @@ public class FileWorker {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void exists(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        if (!file.exists()){
+            throw new FileNotFoundException(file.getName());
+        }
+    }
+
+    public static String read(String fileName) throws FileNotFoundException {
+        //Этот спец. объект для построения строки
+        StringBuilder sb = new StringBuilder();
+
+        exists(fileName);
+
+        //Определяем файл
+        File file = new File(fileName);
+
+        try {
+            //Объект для чтения файла в буфер
+            BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
+            try {
+                //В цикле построчно считываем файл
+                String s;
+                while ((s = in.readLine()) != null) {
+                    sb.append(s);
+                    sb.append("\n");
+                }
+            } finally {
+                //Также не забываем закрыть файл
+                in.close();
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Возвращаем полученный текст с файла
+        return sb.toString();
     }
 }
