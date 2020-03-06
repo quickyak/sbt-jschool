@@ -13,6 +13,19 @@
     Задание 6: Выведите на экран строки, номера которых задаются пользователем в произвольном порядке.
 
 
+
+--- 
+
 Работа с Git
-Тест Git
+    Изначальный источник - 
+    Настройка Git в Intellij IDEA - 
+        https://javadevblog.com/nastrojka-git-v-intellij-idea.html
+    git remote rename origin old_origin
+    git remote add origin https://github.com/quickyak/sbt-jschool.git    
+    git push origin master  
     git push --set-upstream origin master
+    
+    git push
+    
+    Как удалить папку .idea и лишние файлы из Git - https://bogachev.biz/2016/03/28/kak-udalit-papku-idea-i-lishnie-faily-iz-git/
+    
