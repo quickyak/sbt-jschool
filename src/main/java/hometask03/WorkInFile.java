@@ -1,7 +1,8 @@
 package hometask03;
 
 import java.io.FileNotFoundException;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class WorkInFile {
@@ -28,6 +29,30 @@ public class WorkInFile {
 
         //Читаем из файла
         String strRead = FileWorker.read(fileName);
+        System.out.println(strRead);
+
+        //Читаем в массив, разбив по \n
+        String[] splitArray = strRead.split("\n");
+        String[] splitArrayS = strRead.split("\\s");
+
+
+        // Задание 1: Подсчитайте количество различных слов в файле.
+        // В реализациях используйте наиболее подходящие имплементации коллекций!
+
+
+/*
+
+        strRead.
+        List<String> lines = new ArrayList<String>();
+
+        strRead.split("\n")
+        List<String> lines = new ArrayList<String>();
+
+        String [] linesAsArray = lines.toArray(new String[lines.size()]);
+        System.out.println("" + Arrays.toString(linesAsArray));
+*/
+
+
         System.out.println(strRead);
     }
 }
