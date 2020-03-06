@@ -27,5 +27,8 @@
     
     git push
     
-    Как удалить папку .idea и лишние файлы из Git - https://bogachev.biz/2016/03/28/kak-udalit-papku-idea-i-lishnie-faily-iz-git/
-    
+    Как удалить папку .idea и лишние файлы из Git  
+       [https://bogachev.biz/2016/03/28/kak-udalit-papku-idea-i-lishnie-faily-iz-git/]
+    How can I Remove .DS_Store files from a Git repository? -gitignore ds_store
+        [https://intellipaat.com/community/9089/how-can-i-remove-dsstore-files-from-a-git-repository-gitignore-dsstore]
+        
