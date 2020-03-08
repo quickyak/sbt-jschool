@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
 public class WorkInFile {
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -21,6 +22,7 @@ public class WorkInFile {
         strText = "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
         strText += "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
         strText += "this new text2\nthis new text3\nThis new text4\nThis new text\nThis new text\n";
+//        strText = "";
         fileInit.setText(strText);
 
         //Запись в файл
@@ -29,15 +31,29 @@ public class WorkInFile {
 
         //Читаем из файла
         String strRead = FileWorker.read(fileName);
-        System.out.println(strRead);
+//        String strRead = strText;
+        System.out.println("Содержимое:  ");
+        System.out.println(strRead); //Для больших файлов надо переделать? Так как слишком большая strRead
+        System.out.println();
 
-        //Читаем в массив, разбив по \n
-        String[] splitArray = strRead.split("\n");
-        String[] splitArrayS = strRead.split("\\s");
-
+        //Читаем в массив
+        String[] splitArray = strRead.split("\\s"); //ловим и пробелы и новую строку - то есть как раз разделим по словам
+        // !!! splitArray при пустой строке состоит из 1го элемента - то есть кол-во элементов надо проверять - один элемент и не пустой ли он!
 
         // Задание 1: Подсчитайте количество различных слов в файле.
         // В реализациях используйте наиболее подходящие имплементации коллекций!
+        //CalcDiffWord.HashSetImpl(strRead); //можно через строку
+        CalcDiffWord.HashSetImpl(splitArray); //можно через массив
+        System.out.println("Количество различных слов = " + CalcDiffWord.getCountDiffWord());
+
+        //Задание 2: Выведите на экран список различных слов файла, отсортированный по возрастанию их длины (компаратор сначала по длине слова, потом по тексту).
+        //OutDiffWordSorted.
+
+
+
+        // можно в HashMap - Имя, Кол-во
+
+        //? Как считаем - через Set
 
 
 /*
@@ -53,7 +69,7 @@ public class WorkInFile {
 */
 
 
-        System.out.println(strRead);
+
     }
 }
 
