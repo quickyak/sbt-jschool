@@ -43,7 +43,7 @@ public class WorkInFile {
         // Задание 1: Подсчитайте количество различных слов в файле.
         // В реализациях используйте наиболее подходящие имплементации коллекций!
         //CalcDiffWord.HashSetImpl(strRead); //можно через строку
-        CalcDiffWord.HashSetImpl(splitArray); //можно через массив
+        CalcDiffWord.hashSetImpl(splitArray); //можно через массив
         System.out.println("Количество различных слов = " + CalcDiffWord.getCountDiffWord());
 
         //Задание 2: Выведите на экран список различных слов файла, отсортированный по возрастанию их длины (компаратор сначала по длине слова, потом по тексту).

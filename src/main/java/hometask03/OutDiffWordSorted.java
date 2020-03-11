@@ -6,26 +6,39 @@ package hometask03;
 
 // через
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class OutDiffWordSorted {
     public static void main(String[] args) {
         String wordsArray[];
         wordsArray = new String[]{"ADF", "Adfda", "afaddas", "asdfas", "adfsd"};
+        //wordsArray = new String[0];
         sortThenPrint(wordsArray);
-
-
     }
 
     public static void sortThenPrint(String[] splitContent) {
-        ArrayImpl(splitContent);
+        //arrayImpl(splitContent);
+        treeSetImpl(splitContent);
     }
 
-    public static void ArrayImpl(String[] splitContent) {
+    private static void treeSetImpl(String[] words) {
+        // !!! splitArray при пустой строке состоит из 1го элемента - то есть кол-во элементов надо проверять - один элемент и не пустой ли он!  equals "
+
+        //! нужно задать компаратор
+        Set<String> treeSet = new TreeSet<>(Comparator.comparing(String::length).thenComparing(String::toString));
+
+        for (String word : words) {
+            treeSet.add(word);
+        }
+        for (String word : treeSet) {
+            System.out.println(word);
+        }
+    }
+
+    private static void arrayImpl(String[] splitContent) {
         // !!! splitArray при пустой строке состоит из 1го элемента - то есть кол-во элементов надо проверять - один элемент и не пустой ли он!  equals ""
 
         //делаем копию массива
@@ -46,15 +59,6 @@ public class OutDiffWordSorted {
 //        Collections.sort(messages, comparator);
         System.out.println(Arrays.toString(wordsArray));
         //дополнительно про печать массивов - https://codengineering.ru/q/whats-the-simplest-way-to-print-a-java-array-27108/
-
-
-/*
-        Collections.sort(Arrays.asList(wordsArray), Comparator
-                .comparing( String::length )
-                .thenComparing( String::toString ));
-*/
-
-
     }
 
     private static void CharacterSortOut() {
@@ -71,7 +75,7 @@ public class OutDiffWordSorted {
             char lch = Character.toLowerCase(ch);
             if ((lch >= 'a' && lch <= 'z') || (lch >= 'а' && lch <= 'я')) {
 //                System.out.println("code=" +  (int) ch + "\tsumbol=" + ch);
-                System.out.printf("code= %1$4d \tsumbol=" + ch + "\n", (int) ch);
+                System.out.printf("code= %1$4d \tsumbol=" + ch + "\n", (int) ch); //format
             }
         }
     }
