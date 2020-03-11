@@ -20,7 +20,7 @@ public class WorkInFile {
 
         String strText;
         strText = "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
-        strText += "This new text\nThis new text2\nThis new text3\nThis new text4\nThis new text5\n";
+        strText += "This old text\nThis New text2\nThis Old text3\nThis pro text4\nThis Pru text5\n";
         strText += "this new text2\nthis new text3\nThis new text4\nThis new text\nThis new text\n";
 //        strText = "";
         fileInit.setText(strText);
@@ -47,7 +47,7 @@ public class WorkInFile {
         System.out.println("Количество различных слов = " + CalcDiffWord.getCountDiffWord());
 
         //Задание 2: Выведите на экран список различных слов файла, отсортированный по возрастанию их длины (компаратор сначала по длине слова, потом по тексту).
-        //OutDiffWordSorted.
+        OutDiffWordSorted.sortThenPrint(splitArray);
 
 
 
