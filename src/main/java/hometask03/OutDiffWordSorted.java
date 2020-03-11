@@ -29,6 +29,7 @@ public class OutDiffWordSorted {
 
         //! нужно задать компаратор
         Set<String> treeSet = new TreeSet<>(Comparator.comparing(String::length).thenComparing(String::toString));
+        //подробнее Руководство по TreeSet в Java - https://www.codeflow.site/ru/article/java-tree-set
 
         for (String word : words) {
             treeSet.add(word);
