@@ -22,18 +22,18 @@ public class CalcDiffWord {
 
     public static void main(String[] args) {
 //        hashSetImpl("ываыва ываыва   ываыва   авопвап лолод ождлодложд  пвапвапвап ываыва" );
-        hashSetImpl("" );
+        hashSetImpl("");
 
         System.out.println(getCountDiffWord());
     }
 
-    public static void  hashSetImpl(String content) {
+    public static void hashSetImpl(String content) {
         // !!! splitArray при пустой строке состоит из 1го элемента - то есть кол-во элементов надо проверять - один элемент и не пустой ли он!
         String[] splitContent = content.split("\\s"); //ловим и пробелы и новую строку - то есть как раз разделим по словам
         hashSetImpl(splitContent);
     }
 
-    public static void  hashSetImpl(String[] splitContent) {
+    public static void hashSetImpl(String[] splitContent) {
         // !!! splitArray при пустой строке состоит из 1го элемента - то есть кол-во элементов надо проверять - один элемент и не пустой ли он!  equals ""
 
         HashSet<String> myHashSet = new HashSet<>();

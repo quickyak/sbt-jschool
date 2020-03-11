@@ -44,8 +44,8 @@ public class FileInit {
         return result;
     }
 
-    private boolean isNullOrEmpty (String s) {
-        return  (s == null || s.isEmpty());
+    private boolean isNullOrEmpty(String s) {
+        return (s == null || s.isEmpty());
     }
 }
 

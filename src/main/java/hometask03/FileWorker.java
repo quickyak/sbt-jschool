@@ -69,7 +69,7 @@ public class FileWorker {
 
     private static void exists(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new FileNotFoundException(file.getName());
         }
     }
@@ -85,7 +85,7 @@ public class FileWorker {
 
         try {
             //Объект для чтения файла в буфер
-            BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
+            BufferedReader in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
             try {
                 //В цикле построчно считываем файл
                 String s;
@@ -97,7 +97,7 @@ public class FileWorker {
                 //Также не забываем закрыть файл
                 in.close();
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
