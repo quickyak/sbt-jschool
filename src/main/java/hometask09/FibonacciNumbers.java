@@ -1,30 +1,44 @@
 package hometask09;
 
-public class FibonacciNumbers {
-    public static long calc(int n) {
-        return fibCycle(n); //может сделаю еще другую реализацию - через лямбду или массивы
-    }
+import java.util.concurrent.atomic.AtomicInteger;
 
-    private static long fibCycle(int n) {
-        long n0 = 1;
-        long n1 = 1;
-        long n2 = 1;
+public class FibonacciNumbers implements Runnable {
+        AtomicInteger baseFib;
 
-        for (int i = 3; i < n + 1; i++) {
-            n2 = n0 + n1;
-            n0 = n1;
-            n1 = n2;
+        @Override
+        public void run() {
+//                System.out.println(String.format("%d - thread %s is running", i, Thread.currentThread().getName()));
+            System.out.println(baseFib + "  " + calc(baseFib.get() ) + " в потоке " + Thread.currentThread().getName());
         }
-        return n2;
-    }
 
-    private static void fibCycleTest(int n) {
-        for (int i = 1; i < n + 1; i++) {
-            System.out.println("input = " + i + "  result = " + fibCycle(i));
+        public FibonacciNumbers(AtomicInteger n) {
+            baseFib = n;
         }
-    }
 
-    private static void fibCycleTest() {
-        fibCycleTest(60);
-    }
+        public static long calc(int n) {
+            return fibCycle(n); //может сделаю еще другую реализацию - через лямбду или массивы
+        }
+
+        private static long fibCycle(int n) {
+            long n0 = 1;
+            long n1 = 1;
+            long n2 = 1;
+
+            for (int i = 3; i < n + 1; i++) {
+                n2 = n0 + n1;
+                n0 = n1;
+                n1 = n2;
+            }
+            return n2;
+        }
+
+        private static void fibCycleTest(int n) {
+            for (int i = 1; i < n + 1; i++) {
+                System.out.println("input = " + i + "  result = " + fibCycle(i));
+            }
+        }
+
+        private static void fibCycleTest() {
+            fibCycleTest(60);
+        }
 }

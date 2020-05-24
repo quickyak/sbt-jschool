@@ -1,7 +1,9 @@
 package hometask09;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 //реализовать ThreadPool
@@ -24,11 +26,28 @@ public class ThreadPool {
     public static void main(String[] args) {
         start();
 
-        for (int i = 0; i < 10; i++) {
-//            executor.execute(new RunnableExample());
-            Runnable runnable = new RunnableExample();
+        AtomicInteger atomicInteger = new AtomicInteger();
+
+//        //здесь просто в цикле
+//        for (Integer i = 0; i < 50; i++) {
+//            atomicInteger.set(i);
+//            Runnable runnable = new FibonacciNumbers(atomicInteger);
+//            execute(runnable);
+//        }
+
+        //здесь из файла
+        ArrayList<Integer> tokens = new ArrayList<Integer>();
+
+        ReadFileLineByLine readFileLineByLine = new ReadFileLineByLine();
+        tokens = readFileLineByLine.readFileTest();
+        System.out.println(tokens);
+
+        for (Integer token : tokens) {
+            atomicInteger.set(token);
+            Runnable runnable = new FibonacciNumbers(atomicInteger);
             execute(runnable);
         }
+
 
     }
 
