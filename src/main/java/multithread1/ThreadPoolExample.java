@@ -1,5 +1,7 @@
 package multithread1;
 
+import hometask09.RunnableExample;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -9,5 +11,6 @@ public class ThreadPoolExample {
         for (int i = 0; i <10 ; i++) {
             executor.execute(new RunnableExample());
         }
+        System.out.println("main");
     }
 }

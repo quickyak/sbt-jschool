@@ -9,7 +9,7 @@ public class ExceptionHandlerExample {
             t.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
                 @Override
                 public void uncaughtException(Thread thread, Throwable throwable) {
-                    if(throwable instanceof MyRuntimeException){
+                    if (throwable instanceof MyRuntimeException) {
                         System.out.println(((MyRuntimeException) throwable).getCode());
                     }
                 }
@@ -17,18 +17,32 @@ public class ExceptionHandlerExample {
             t.start();
             Thread.sleep(1000);
             System.out.println("main thread finished");
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
     }
 
     static class MyRuntimeException extends RuntimeException {
-        public String getCode(){
+        public String getCode() {
             return "MyException";
         }
     }
-
-
-
 }
+
+
+//public class ExceptionHandlerExample {
+//    public static void main(String[] args) throws InterruptedException {
+//        try {
+//            Thread t = new Thread(() -> {
+//                throw new RuntimeException();
+//            });
+//            t.start();
+//            Thread.sleep(1000);
+//            System.out.println("main thread finished");
+//        }catch (Exception ex){
+//            System.out.println(ex.getMessage());
+//        }
+//
+//    }
+//}
