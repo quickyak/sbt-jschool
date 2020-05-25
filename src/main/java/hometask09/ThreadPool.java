@@ -1,9 +1,11 @@
 package hometask09;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 //реализовать ThreadPool
@@ -15,62 +17,53 @@ import java.util.concurrent.atomic.AtomicInteger;
 //}
 
 
-
 //Runtime.getRuntime().availableProcessors() - количество доступных процессоров
 //Предположим, что это оптимальная величина по количеству потоков
 //оптимальный пул потоков = Runtime.getRuntime().availableProcessors() + 1.
 
 public class ThreadPool {
     static Executor executor;
+    static int nThreads = 4;
+//    static ExecutorService pool;
 
     public static void main(String[] args) {
         start();
 
-        AtomicInteger atomicInteger = new AtomicInteger();
+        AtomicLong AtomicLong = new AtomicLong();
 
 //        //здесь просто в цикле
-//        for (Integer i = 0; i < 50; i++) {
-//            atomicInteger.set(i);
-//            Runnable runnable = new FibonacciNumbers(atomicInteger);
+//        for (int i = 0; i < 51; i++) {
+//            Runnable runnable = new FibonacciNumbers(i);
 //            execute(runnable);
 //        }
 
         //здесь из файла
-        ArrayList<Integer> tokens = new ArrayList<Integer>();
+        ArrayList<Integer> tokens = new ArrayList<>();
 
         ReadFileLineByLine readFileLineByLine = new ReadFileLineByLine();
         tokens = readFileLineByLine.readFileTest();
-        System.out.println(tokens);
+        System.out.println("tokens = " + tokens);
 
-        for (Integer token : tokens) {
-            atomicInteger.set(token);
-            Runnable runnable = new FibonacciNumbers(atomicInteger);
+        //потокобезопасная коллекция
+        List<Integer> list; // = new ArrayList<>();
+        list = Collections.synchronizedList(tokens);
+        System.out.println("list = " + list);
+
+        // печать значений коллекции
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("i = " + list.get(i));
+            Runnable runnable = new FibonacciNumbers(list.get(i));
             execute(runnable);
         }
-
-
     }
 
     // запускает потоки. Потоки бездействуют, до тех пор пока не появится новое задание в очереди (см. execute)
     public static void start() {
-//        Executor executor = Executors.newFixedThreadPool(4);
-        executor = Executors.newFixedThreadPool(4);
+        executor = Executors.newFixedThreadPool(nThreads);
     }
 
     // запускает потоки. Потоки бездействуют, до тех пор пока не появится новое задание в очереди (см. execute)
     public static void execute(Runnable runnable) {
         executor.execute(runnable);
     }
-
 }
-
-//FixedThreadPool
-
-//
-//public class ThreadExam {
-//    //Для запуска задачи в отдельном потоке можно использовать класс Thread
-//    public static void main(String[] args) {
-////        Thread t = new Thread(new SomeTask());
-////        t.start();
-//    }
-//}

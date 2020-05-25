@@ -3,8 +3,10 @@ package hometask09;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class FibonacciMain {
+//проверка выполнения в 1 поток
+public class FibonacciTest {
     public static void main(String[] args) {
         ArrayList<Integer> tokens = new ArrayList<Integer>();
 
@@ -12,17 +14,18 @@ public class FibonacciMain {
         tokens = readFileLineByLine.readFileTest();
         System.out.println(tokens);
 
+        AtomicLong fibResult = new AtomicLong();
         for (Integer token : tokens) {
-            Long fib;
-            fib = FibonacciNumbers.calc(token);
+            FibonacciNumbers fibonacciNumbers = new FibonacciNumbers(token);
+            fibResult = fibonacciNumbers.calc();
 //            System.out.println(String.format("%d - "%d",  token ,fib));
             System.out.print(token + " - ");
-            System.out.println(df(fib));
+            System.out.println(df(fibResult));
         }
     }
 
     //разделитель 123 46 для больших чисел
-    public static String df(Long n) {
+    public static String df(AtomicLong n) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 // вот тут устанавливаем разделитель он и так по умолчанию пробел,
 // но в этом примере я решил это сделать явно
@@ -31,7 +34,9 @@ public class FibonacciMain {
         df.setDecimalFormatSymbols(symbols);
 // указываем сколько символов в группе
         df.setGroupingSize(3);
-        return df.format(n);
+
+        Long nn=n.get();
+        return df.format(n.get());
     }
 }
 
