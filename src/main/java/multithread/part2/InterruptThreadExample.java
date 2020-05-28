@@ -6,11 +6,15 @@ public class InterruptThreadExample {
 
     public static void main(String[] args) throws InterruptedException {
         MyRunnable runnable = new MyRunnable();
+
         Thread t = new Thread(runnable);
         t.start();
+//        new Thread(runnable).start();
 
         Thread.sleep(2000);
         t.interrupt();
+//        runnable.end();
+
         System.out.println("main finished");
     }
 }

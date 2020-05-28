@@ -2,7 +2,7 @@ package multithread.part2;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ReentalLockExample {
+public class  ReentalLockExample {
 
     public static void main(String[] args) {
 
@@ -17,7 +17,7 @@ public class ReentalLockExample {
     }
 }
 
-class CommonResource{
+class CommonResource{ //общий ресурс, аналогичный нашему счетчику
     int x=0;
 }
 

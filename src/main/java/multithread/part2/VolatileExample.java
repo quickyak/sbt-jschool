@@ -6,7 +6,8 @@ public class VolatileExample {
         new VolatileExample().start();
     }
 
-    private volatile boolean btExit = false;
+//    private volatile boolean btExit = false;
+    private  boolean btExit = false;
 
     // запуск потоков
     public void start() {

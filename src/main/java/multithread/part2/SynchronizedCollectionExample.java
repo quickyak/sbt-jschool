@@ -9,9 +9,10 @@ public class SynchronizedCollectionExample {
     public static void main(String[] args) throws InterruptedException {
 
         Collection collection = Collections.synchronizedCollection(new ArrayList());
+//        Collection collection = new ArrayList();
 
         Runnable addData = ()->{
-            for (int i=0;i<10;i++){
+            for (int i=0;i<30;i++){
                 collection.add(i);
                 try {
                     Thread.sleep(200);
@@ -27,5 +28,6 @@ public class SynchronizedCollectionExample {
         t1.join();
         t2.join();
         System.out.println(collection.size());
+        System.out.println(collection);
     }
 }
