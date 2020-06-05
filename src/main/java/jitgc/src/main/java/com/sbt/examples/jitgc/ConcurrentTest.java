@@ -1,6 +1,7 @@
-package com.sbt.examples.jitgc;
-import java.util.concurrent.*;
-
+package jitgc.src.main.java.com.sbt.examples.jitgc;
 public class ConcurrentTest {
+    public static void main(String[] args) {
+
+    }
 
 }
