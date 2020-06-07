@@ -1,0 +1,87 @@
+Index: src/main/java/hometask14/creational/abstractfactory/AbstractFactory.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/hometask14/creational/abstractfactory/AbstractFactory.txt	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
++++ src/main/java/hometask14/creational/abstractfactory/AbstractFactory.txt	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
+@@ -0,0 +1,25 @@
++Шаблон: Абстрактная фабрика (Abstract Factory)
++Source - https://www.youtube.com/watch?v=cmyUI_ZezoU
++=================
++
++Цель:
++
++Создание интерфейса, для создания множества взаимосвязанных или взаимозависимых объектов, без жесткой
++привязке к конкретным классам.
++
++=================
++Для чего используется:
++
++Для создания множеств взаимосвязанных объектов.
++Пример использования:
++-	система не должна зависеть от метода создания, компоновки и представления входящих в неё объектов;
++
++-	входяиуе взаимосвязанные объекты должны использоваться вместе;
++
++-	система должна конфигурироваться одним из множеств объектов, из которых она состоит;
++
++-	нам необходимо предоставить множество объектов, раскрывая только их интерфейсы но не реализацию.
++I=================
++
++
++
+Index: src/main/java/hometask14/creational/abstractfactory/ManualTester.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/hometask14/creational/abstractfactory/ManualTester.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
++++ src/main/java/hometask14/creational/abstractfactory/ManualTester.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
+@@ -0,0 +1,7 @@
++package hometask14.creational.abstractfactory;
++
++public class ManualTester {
++    public void testCode(){
++        System.out.println("Manual Tester testes code ...");
++    }
++}
+Index: src/main/java/hometask14/creational/abstractfactory/ProjectManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/hometask14/creational/abstractfactory/ProjectManager.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
++++ src/main/java/hometask14/creational/abstractfactory/ProjectManager.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
+@@ -0,0 +1,7 @@
++package hometask14.creational.abstractfactory;
++
++public class ProjectManager {
++    public void manageProject() {
++        System.out.println("ProjectManager manages project...");
++    }
++}
+Index: src/main/java/hometask14/creational/abstractfactory/WebsiteProject.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/hometask14/creational/abstractfactory/WebsiteProject.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
++++ src/main/java/hometask14/creational/abstractfactory/WebsiteProject.java	(revision f83fb0fb304dd75ed2555976e5a4bb3d4a51a104)
+@@ -0,0 +1,16 @@
++package hometask14.creational.abstractfactory;
++
++import hometask14.creational.factory.PhpDeveloper;
++
++public class WebsiteProject {
++    public static void main(String[] args) {
++        PhpDeveloper phpDeveloper = new PhpDeveloper();
++        ManualTester manualTester = new ManualTester();
++        ProjectManager projectManager = new ProjectManager();
++
++        System.out.println("Creating project ...");
++        phpDeveloper.writeCode();
++        manualTester.testCode();
++        projectManager.manageProject();
++    }
++}
