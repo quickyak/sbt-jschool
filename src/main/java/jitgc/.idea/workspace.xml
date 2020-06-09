@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="df39c431-4747-476a-bcf3-04e3de5049ef" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../hometask12/ConfigureJMH.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sbt/examples/jitgc/ConcurrentTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1caJuVRSTHtpf9Gnc2UnETvGMBc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunManager" selected="Application.JitMain">
+    <configuration name="FullGcMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sbt.examples.jitgc.FullGcMain" />
+      <module name="jitgc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sbt.examples.jitgc.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JitMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.sbt.examples.jitgc.JitMain" />
+      <module name="jitgc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sbt.examples.jitgc.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JitMain" />
+        <item itemvalue="Application.FullGcMain" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="df39c431-4747-476a-bcf3-04e3de5049ef" name="Default Changelist" comment="" />
+      <created>1590760993275</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590760993275</updated>
+      <workItem from="1590760994669" duration="1497000" />
+      <workItem from="1590815796573" duration="368000" />
+      <workItem from="1590816551216" duration="339000" />
+      <workItem from="1590864930131" duration="11000" />
+      <workItem from="1590866193501" duration="1042000" />
+      <workItem from="1591215470341" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3304" y="383" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590813245378">
+      <screen x="2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3304" y="383" key="#com.intellij.execution.impl.EditConfigurationsDialog/2560.0.2560.1440/0.0.2560.1440@2560.0.2560.1440" timestamp="1590813245378" />
+    <state x="3349" y="359" key="SettingsEditor" timestamp="1590815876910">
+      <screen x="2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3349" y="359" key="SettingsEditor/2560.0.2560.1440/0.0.2560.1440@2560.0.2560.1440" timestamp="1590815876910" />
+  </component>
+</project>
