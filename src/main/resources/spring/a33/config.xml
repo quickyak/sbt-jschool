@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="environmentAsia" class="spring.a33.Environment">
+        <constructor-arg index="0" value="Азия"/>
+    </bean>
+
+    <bean id="environmentAfrica" class="spring.a33.Environment">
+        <constructor-arg index="0" value="Африка"/>
+    </bean>
+
+    <bean id="asiaTiger" class="spring.a33.Tiger">
+        <constructor-arg index="0" ref="environmentAsia"/>
+        <constructor-arg index="1" value="Азиатский тигр"/>
+    </bean>
+
+</beans>

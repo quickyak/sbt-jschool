@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dependencyBean" class="spring.a34.DependencyBean"/>
+
+    <bean id="dependencyPropertyBean" class="spring.a34.DependencyPropertyBean"/>
+
+    <bean id="mainBean" scope="prototype" class="spring.a34.MainBean" autowire="byName"/>
+
+</beans>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <bean class="spring.a27.Engine">
+        <constructor-arg name="volume" type="int" value="16"/>
+    </bean>
+    <bean id="engine14" class="spring.a27.Engine">
+        <constructor-arg name="volume" type="int" value="14"/>
+    </bean>
+
+    <bean id="childSeat" class="spring.a27.ChildSeat"/>
+
+    <bean id="myCar" name="bestCar" class="spring.a27.Car">
+        <constructor-arg index="0" ref="engine14"/>
+        <constructor-arg name="name" value="myCar"/>
+        <property name="childSeat" ref="childSeat"/>
+        <lookup-method name="getPassengerOnBoard" bean="passenger"/>
+    </bean>
+
+<!--    <bean id="mySecondCar" class="spring.a27.Car" factory-method="create">-->
+<!--        <constructor-arg name="engine" ref="spring.a27.Engine"/>-->
+<!--        <constructor-arg name="name" value="mySecondCar"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="autoFactory" class="spring.a27.AutoFactory"/>-->
+
+<!--    <bean id="myThirdCar" factory-bean="autoFactory" factory-method="createCar">-->
+<!--        <constructor-arg name="engine" ref="spring.a27.Engine"/>-->
+<!--        <constructor-arg name="name" value="myThirdCar"/>-->
+<!--    </bean>-->
+
+    <bean id="config" class="spring.a27.Config"/>
+    <bean id="configPrinter" class="spring.a27.ConfigPrinter">
+        <property name="info" value="#{config.os + ' ' + config.computername}"/>
+    </bean>
+
+    <!--    Lookup method-->
+    <bean id="aggregator306306" class="spring.a27.Aggregator306306"/>
+    <bean id="passenger" scope="prototype" factory-bean="aggregator306306" factory-method="getNewPassenger"/>
+    <bean id="car" scope="prototype" class="spring.a27.Car">
+        <constructor-arg name="engine" value="spring.a27.Engine"/>
+        <constructor-arg name="name" value="myThirdCar"/>
+        <lookup-method bean="passenger" name="getPassengerOnBoard"/>
+    </bean>
+
+</beans>
