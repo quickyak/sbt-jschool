@@ -23,10 +23,13 @@ public class WorkInFile {
 
         //Запись в файл
         String fileName = fileInit.getFullName();
-        FileWorker.write(fileName, fileInit.getText());
+        FileWorker fileWorker = new FileWorker();
+        fileWorker.setFileName(fileName);
+        fileWorker.write(fileInit.getText());
 
         //Читаем из файла
-        String strRead = FileWorker.read(fileName);
+        fileWorker.setFileName(fileName);
+        String strRead = fileWorker.read();
 //        String strRead = strText;
         System.out.println("Содержимое:  ");
         System.out.println(strRead); //Для больших файлов надо переделать? Так как слишком большая strRead

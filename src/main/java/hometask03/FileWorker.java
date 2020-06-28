@@ -5,45 +5,47 @@ package hometask03;
 import java.io.*;
 
 public class FileWorker {
-    private static String dirName;
-    private static String fileName;
-    private static String text;
+    private  String dirName;
+    private  String fileName;
+    private  String text;
 
 
-    public static String getDirName() {
+    public  String getDirName() {
         return dirName;
     }
 
-    public static void setDirName(String dirName) {
-        FileWorker.dirName = dirName;
+    public  void setDirName(String dirName) {
+        this.dirName = dirName;
     }
 
 
-    public static String getFileName() {
+    public  String getFileName() {
         return fileName;
     }
 
-    public static void setFileName(String fileName) {
-        FileWorker.fileName = fileName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
 
-    public static String getText() {
+    public  String getText() {
         return text;
     }
 
-    public static void setText(String text) {
-        FileWorker.text = text;
+    public  void setText(String text) {
+        this.text = text;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public  void main(String[] args)  {
         //Запись в файл
-        FileWorker.write(dirName + fileName, text);
+        FileWorker fileWorker = new FileWorker();
+        fileWorker.setFileName(dirName + fileName);
+        fileWorker.write(text);
     }
 
-    public static void write(String fileName, String text) {
+    public  void write(String text) {
         //Определяем файл
-        File file = new File(fileName);
+        File file = new File(getFileName());
 
         try {
             //проверяем, что если файл не существует то создаем его
@@ -67,21 +69,21 @@ public class FileWorker {
         }
     }
 
-    private static void exists(String fileName) throws FileNotFoundException {
-        File file = new File(fileName);
+    private  void existsFile() throws FileNotFoundException {
+        File file = new File(getFileName());
         if (!file.exists()) {
             throw new FileNotFoundException(file.getName());
         }
     }
 
-    public static String read(String fileName) throws FileNotFoundException {
+    public  String read() throws FileNotFoundException {
         //Этот спец. объект для построения строки
         StringBuilder sb = new StringBuilder();
 
-        exists(fileName);
+        existsFile();
 
         //Определяем файл
-        File file = new File(fileName);
+        File file = new File(getFileName());
 
         try {
             //Объект для чтения файла в буфер
@@ -103,5 +105,21 @@ public class FileWorker {
 
         //Возвращаем полученный текст с файла
         return sb.toString();
+    }
+
+    public  String getTextFromFile (String localFileName )   {
+//        FileWorker fileWorker = new FileWorker();
+        this.setFileName(localFileName);
+        String result = null;
+        try {
+            result = this.read();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+//        System.out.println("Содержимое файла " + getFileName());
+//        System.out.println(result);
+
+        return result;
     }
 }
