@@ -76,6 +76,18 @@ public class FileWorker {
         }
     }
 
+    private  boolean isExistsFile() {
+        boolean result = false;
+        try {
+            existsFile();
+            result = true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public  String read() throws FileNotFoundException {
         //Этот спец. объект для построения строки
         StringBuilder sb = new StringBuilder();

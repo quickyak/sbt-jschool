@@ -1,6 +1,6 @@
 package video;
 
-public class TupleSrt<S1, S2> {
+public class TupleSrt<S1 extends String, S2 extends String> {
     private S1 first;
     private S2 second;
 
@@ -12,20 +12,10 @@ public class TupleSrt<S1, S2> {
     public S1 getFirst() {
         return first;
     }
+    //00:00:00,000 --> 00:00:10,019
 
-    public void setFirst(S1 first) {
-        this.first = first;
-    }
 
     public S2 getSecond() {
         return second;
     }
-
-    public void setSecond(S2 second) {
-        this.second = second;
-    }
-
-
-
-
 }

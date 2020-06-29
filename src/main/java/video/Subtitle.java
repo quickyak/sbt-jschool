@@ -25,19 +25,7 @@ public class Subtitle {
         // Перееведем текст в мапу
         Map <Integer, TupleSrt<String, String>> mapSrt= new TreeMap<>();
         subtitle.textToMap(content, mapSrt);
-
-
-            for (Map.Entry<Integer, TupleSrt<String, String>> entry : mapSrt.entrySet()) {
-                System.out.println(
-//                        entry.getKey() + ":" +
-//                        entry.getValue().getFirst() +
-                        entry.getValue().getSecond()
-                );
-        }
-
-                //? Save to file (only Second)
-
-
+        subtitle.printMap(mapSrt);
 
         // Сохраним содержимое мапы в Excel
         //      Apache POI - the Java API for Microsoft Documents
@@ -50,6 +38,20 @@ public class Subtitle {
 
     }
 
+    private void printMap(Map<Integer, TupleSrt<String, String>> mapSrt) {
+        for (Map.Entry<Integer, TupleSrt<String, String>> entry : mapSrt.entrySet()) {
+            TimeSrt timeSrt = new TimeSrt(entry.getValue().getFirst());
+
+            System.out.println(
+                    entry.getKey()
+//                                + " (" + timeSrt.toStringStart() + ") "
+                            + " (" + timeSrt.toStringMiddle() + ") "
+                            + entry.getValue().getSecond()
+//                                + " || " + timeSrt.toStringStart()
+                    //                       + entry.getValue().getFirst()
+            );
+        }
+    }
 
 
     public  String getTextFromFile ()   {
@@ -78,7 +80,7 @@ public class Subtitle {
         List<String> strings;
         strings = Arrays.asList(text.split("\n"));
 
-        int numRow=0;
+//        int numRow=0;
         int idxBlock=0;
 
         int key=0;
@@ -88,7 +90,6 @@ public class Subtitle {
 
         for (String string:strings
         ) {
-
             switch(idxBlock) {
                 //0 - is key
                 //1 - is String diapason
@@ -112,20 +113,9 @@ public class Subtitle {
                     break;
             }
 
-            numRow++;
+//            numRow++;
             idxBlock++;
             if (idxBlock==4) idxBlock = 0; //далее идет новый блок
         }
-
-
-//        System.out.println("Map:" + mapSrt);
-        // https://javarush.ru/groups/posts/1940-klass-hashmap-
     }
-
-    public void iterateUsingEntrySet(Map<String, Integer> map) {
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + ":" + entry.getValue());
-        }
-    }
-
 }
