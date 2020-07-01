@@ -11,20 +11,25 @@ public class SubtitleMap {
 
     private void initMap() {
         if (this.mapSrt == null) {
-            this.mapSrt = new TreeMap<Integer, TupleSrt<String, String>>();
+            this.mapSrt = new TreeMap<>();
         }
     }
 
     private void prepareMapIfNeed() {
 //        if (this.mapSrt == null) {
+        boolean blnNeedPrepare = false;
+
+        if (mapSrt.size()==0) {blnNeedPrepare = true;}
+        if (blnNeedPrepare) {
             this.getMapFromFile();
-            //проверка на что?
-//        }
+        }
+            //проверка на что? - чтобы сразу можно было вызвать
+//        getFromDiapason()
     }
 
     public static void main(String[] args) {
         SubtitleMap subtitleMap = new SubtitleMap();
-        subtitleMap.prepareMapIfNeed();
+//        subtitleMap.prepareMapIfNeed();
 //        subtitleMap.printMap();
         subtitleMap.testGetFromDiapason();
 
@@ -98,7 +103,7 @@ public class SubtitleMap {
             if (isStart && isEnd) {
                 //в нужной записи
                 String entryText = getEntrySubtitle(entry, subtitleTime);
-                result+=entryText + "\n";
+                result += entryText + "\n"; //? concat
 //                System.out.println(entryText);
             }
         }
@@ -179,7 +184,6 @@ public class SubtitleMap {
                     break;
                 case 2:
                     second = string;
-                    ;
                     break;
                 case 3:
                     //empty string
