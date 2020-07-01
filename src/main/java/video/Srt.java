@@ -4,7 +4,11 @@ import java.util.Date;
 
 public class Srt {
     public static void main(String[] args) {
+        testDiapason();
 
+    }
+
+    private static void testDiapason() {
         //  Вначале метод - получить субитры в диапазоне
         //  как по времени >= start  и <end
         //  00:24:19 до 00:26:09 -
@@ -16,21 +20,10 @@ public class Srt {
         Date endTime = SubtitleTime.getNullDateWithTime(0,26,9);
 
 
-        Srt srt = new Srt();
-        String test= srt.getFromDiapazon(startTime,endTime);
-        System.out.println(test);
-
+//        SubtitleMap subtitleMap = new SubtitleMap();
+        String content= new SubtitleMap().getFromDiapason(startTime,endTime);
+        System.out.println(content);
     }
 
-    public String getFromDiapazon(
-            Date startTime,
-            Date endTime
-    ) {
-        String result;
 
-
-        result = startTime + " --> " + endTime;
-        return result;
-
-    };
 }

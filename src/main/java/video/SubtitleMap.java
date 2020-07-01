@@ -1,23 +1,33 @@
 package video;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SubtitleMap {
-    private String fileName;
+    Map<Integer, TupleSrt<String, String>> mapSrt;
 
+    public SubtitleMap() {
+        initMap();
+    }
+
+    private void initMap() {
+        if (this.mapSrt == null) {
+            this.mapSrt = new TreeMap<Integer, TupleSrt<String, String>>();
+        }
+    }
+
+    private void prepareMapIfNeed() {
+//        if (this.mapSrt == null) {
+            this.getMapFromFile();
+            //проверка на что?
+//        }
+    }
 
     public static void main(String[] args) {
-        // Считаем текст из файла
-        String content = new SubtitleFile(2).getTextFromFile();
-
-        // Перееведем текст в мапу
         SubtitleMap subtitleMap = new SubtitleMap();
-        Map <Integer, TupleSrt<String, String>> mapSrt= new TreeMap<>();
-        subtitleMap.textToMap(content, mapSrt);
-        subtitleMap.printMap(mapSrt);
+        subtitleMap.prepareMapIfNeed();
+//        subtitleMap.printMap();
+        subtitleMap.testGetFromDiapason();
+
 
         // Сохраним содержимое мапы в Excel
         //      Apache POI - the Java API for Microsoft Documents
@@ -30,23 +40,106 @@ public class SubtitleMap {
 
     }
 
-    private void printMap(Map<Integer, TupleSrt<String, String>> mapSrt) {
+    private void getMapFromFile() {
+        // Считаем текст из файла
+        String content = new SubtitleFile().getTextFromFile();
+
+        // Перееведем текст в мапу
+        textToMap(content);
+    }
+
+    private void testGetFromDiapason() {
+        //  Вначале метод - получить субитры в диапазоне
+        //  как по времени >= start  и <end
+        //  00:24:19 до 00:26:09 -
+        //  вывести в консоль
+        //  скопировать в буфер обмена (для вставки)
+
+
+        Date startTime = SubtitleTime.getNullDateWithTime(0, 24, 19);
+        Date endTime = SubtitleTime.getNullDateWithTime(0, 26, 9);
+
+        String content = getFromDiapason(startTime, endTime);
+        System.out.println(content);
+    }
+
+    public String getFromDiapason(
+            Date startTime,
+            Date endTime
+    ) {
+
+        prepareMapIfNeed();
+
+        String result;
+        result = SubtitleTime.timeToStringShort(startTime)
+                + " --> "
+                + SubtitleTime.timeToStringShort(endTime)
+                + "\n\n";
+
+
+        //проход по Map
         for (Map.Entry<Integer, TupleSrt<String, String>> entry : mapSrt.entrySet()) {
             SubtitleTime subtitleTime = new SubtitleTime(entry.getValue().getFirst());
 
-            System.out.println(
-                    entry.getKey()
+
+            boolean isStart = false;
+            boolean isEnd = false;
+
+
+//            date1.compareTo(date2) > 0) {
+//                System.out.println("Date1 is after Date2");
+
+            if (subtitleTime.getStartTime().compareTo(startTime) >= 0) {
+                isStart = true;
+            }
+            if (subtitleTime.getEndTime().compareTo(endTime) <= 0) {
+                isEnd = true;
+            }
+            if (isStart && isEnd) {
+                //в нужной записи
+                String entryText = getEntrySubtitle(entry, subtitleTime);
+                result+=entryText + "\n";
+//                System.out.println(entryText);
+            }
+        }
+
+        return result;
+
+    }
+
+    private String getEntry(Map.Entry<Integer, TupleSrt<String, String>> entry, SubtitleTime subtitleTime) {
+        return
+        entry.getKey()
 //                                + " (" + timeSrt.toStringStart() + ") "
-                            + " (" + subtitleTime.toStringMiddle() + ") "
-                            + entry.getValue().getSecond()
+                        + " (" + subtitleTime.toStringMiddle() + ") "
+                        + entry.getValue().getSecond()
 //                                + " || " + timeSrt.toStringStart()
-                    //                       + entry.getValue().getFirst()
+                //                       + entry.getValue().getFirst()
+        ;
+    }
+
+    private String getEntrySubtitle(Map.Entry<Integer, TupleSrt<String, String>> entry, SubtitleTime subtitleTime) {
+        return
+//                entry.getKey()
+//                                + " (" + timeSrt.toStringStart() + ") "
+//                        + " (" + subtitleTime.toStringMiddle() + ") "
+                entry.getValue().getSecond()
+//                                + " || " + timeSrt.toStringStart()
+                //                       + entry.getValue().getFirst()
+        ;
+    }
+
+    private void printMap() {
+        for (Map.Entry<Integer, TupleSrt<String, String>> entry : mapSrt.entrySet()) {
+            SubtitleTime subtitleTime = new SubtitleTime(entry.getValue().getFirst());
+            System.out.println(
+                    getEntry(entry, subtitleTime)
             );
         }
     }
 
 
-    public  void textToMap(String text, Map mapSrt)   {
+    public void textToMap(String text) {
         //? Как напечатать только 1,5,9 строки
 //        Stream
 
@@ -64,16 +157,16 @@ public class SubtitleMap {
         strings = Arrays.asList(text.split("\n"));
 
 //        int numRow=0;
-        int idxBlock=0;
+        int idxBlock = 0;
 
-        int key=0;
-        String first="";
-        String second="";
+        int key = 0;
+        String first = "";
+        String second = "";
 
 
-        for (String string:strings
+        for (String string : strings
         ) {
-            switch(idxBlock) {
+            switch (idxBlock) {
                 //0 - is key
                 //1 - is String diapason
                 //2 - is Caption
@@ -85,7 +178,8 @@ public class SubtitleMap {
                     first = string;
                     break;
                 case 2:
-                    second = string;;
+                    second = string;
+                    ;
                     break;
                 case 3:
                     //empty string
@@ -98,7 +192,9 @@ public class SubtitleMap {
 
 //            numRow++;
             idxBlock++;
-            if (idxBlock==4) idxBlock = 0; //далее идет новый блок
+            if (idxBlock == 4) idxBlock = 0; //далее идет новый блок
         }
     }
+
+
 }

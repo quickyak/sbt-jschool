@@ -56,6 +56,14 @@ public class SubtitleTime {
     }
 
 
+    public static String timeToString(Date time) {
+        return FORMATTER.format(time);
+    }
+    public static String timeToStringShort(Date time) {
+        return FORMATTER_SHORT.format(time);
+    }
+
+
 
 
 
