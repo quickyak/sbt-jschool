@@ -4,8 +4,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import  java.util.Calendar;
 
-public class TimeSrt {
+public class SubtitleTime {
     static final DateFormat FORMATTER = new SimpleDateFormat("HH:mm:ss,SSS");
     static final DateFormat FORMATTER_SHORT = new SimpleDateFormat("HH:mm:ss");
 
@@ -16,7 +17,7 @@ public class TimeSrt {
     private Date startTime;
     private Date endTime;
 
-    public TimeSrt(String complexValue) {
+    public SubtitleTime(String complexValue) {
         this.complexValue = complexValue;
         populateDates();
     }
@@ -65,8 +66,8 @@ public class TimeSrt {
         //        String testComplexValue = "00:00:00,000 --> 00:00:10,019";
         String strTestComplexValue = "02:51:34,629 --> 02:51:39,699";
 
-        TimeSrt timeSrt = new TimeSrt(strTestComplexValue);
-        System.out.println(timeSrt);
+        SubtitleTime subtitleTime = new SubtitleTime(strTestComplexValue);
+        System.out.println(subtitleTime);
 //        System.out.println(timeSrt.getStartTime());
 //        System.out.println(timeSrt.getEndTime());
 
@@ -113,14 +114,22 @@ public class TimeSrt {
         }
     }
 
-    private static Date getNullDate() {
+    static Date getNullDate() {
+        return (getNullDateWithTime(0,0,0,0));
+    }
+
+    static Date getNullDateWithTime(int hours, int minutes, int seconds) {
+        return (getNullDateWithTime(hours,minutes,seconds,0));
+    }
+
+    static Date getNullDateWithTime(int hours, int minutes, int seconds, int millis) {
         Date d = new Date(0L); //Этот конструктор принимает аргумент, равный количеству миллисекунд, прошедших с полуночи 1 января 1970 года. from https://coderlessons.com/tutorials/java-tekhnologii/uchit-java/java-data-i-vremia
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(d);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        c.set(Calendar.HOUR_OF_DAY, hours);
+        c.set(Calendar.MINUTE, minutes);
+        c.set(Calendar.SECOND, seconds);
+        c.set(Calendar.MILLISECOND, millis);
         d = c.getTime();
         return (d);
     }

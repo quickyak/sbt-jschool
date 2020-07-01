@@ -1,31 +1,23 @@
 package video;
 
-import hometask03.FileWorker;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-import java.util.*;
-
-public class Subtitle {
+public class SubtitleMap {
     private String fileName;
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 
     public static void main(String[] args) {
         // Считаем текст из файла
-        Subtitle subtitle = new Subtitle();
-//        subtitle.setFileName("/Users/yaroslav/Downloads/Youtube/2020-06-26 Виктор.srt");
-        subtitle.setFileName("/Users/yaroslav/Desktop/2020-06-26 Виктор.srt");
-        String content = subtitle.getTextFromFile();
+        String content = new SubtitleFile(2).getTextFromFile();
 
         // Перееведем текст в мапу
+        SubtitleMap subtitleMap = new SubtitleMap();
         Map <Integer, TupleSrt<String, String>> mapSrt= new TreeMap<>();
-        subtitle.textToMap(content, mapSrt);
-        subtitle.printMap(mapSrt);
+        subtitleMap.textToMap(content, mapSrt);
+        subtitleMap.printMap(mapSrt);
 
         // Сохраним содержимое мапы в Excel
         //      Apache POI - the Java API for Microsoft Documents
@@ -40,12 +32,12 @@ public class Subtitle {
 
     private void printMap(Map<Integer, TupleSrt<String, String>> mapSrt) {
         for (Map.Entry<Integer, TupleSrt<String, String>> entry : mapSrt.entrySet()) {
-            TimeSrt timeSrt = new TimeSrt(entry.getValue().getFirst());
+            SubtitleTime subtitleTime = new SubtitleTime(entry.getValue().getFirst());
 
             System.out.println(
                     entry.getKey()
 //                                + " (" + timeSrt.toStringStart() + ") "
-                            + " (" + timeSrt.toStringMiddle() + ") "
+                            + " (" + subtitleTime.toStringMiddle() + ") "
                             + entry.getValue().getSecond()
 //                                + " || " + timeSrt.toStringStart()
                     //                       + entry.getValue().getFirst()
@@ -53,15 +45,6 @@ public class Subtitle {
         }
     }
 
-
-    public  String getTextFromFile ()   {
-        String result = new FileWorker().getTextFromFile(getFileName());
-
-//        System.out.println("Содержимое файла " + getFileName());
-//        System.out.println(result);
-
-        return result;
-    }
 
     public  void textToMap(String text, Map mapSrt)   {
         //? Как напечатать только 1,5,9 строки
