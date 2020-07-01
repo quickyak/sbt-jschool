@@ -19,8 +19,6 @@ public class Srt {
         Date startTime = SubtitleTime.getNullDateWithTime(0,24,19);
         Date endTime = SubtitleTime.getNullDateWithTime(0,26,9);
 
-
-//        SubtitleMap subtitleMap = new SubtitleMap();
         String content= new SubtitleMap().getFromDiapason(startTime,endTime);
         System.out.println(content);
     }

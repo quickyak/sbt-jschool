@@ -34,11 +34,7 @@ public class SubtitleMap {
         subtitleMap.testGetFromDiapason();
 
 
-        // Сохраним содержимое мапы в Excel
-        //      Apache POI - the Java API for Microsoft Documents
-        //      http://poi.apache.org
-        //      https://habr.com/ru/post/56817/
-        //      https://ru.stackoverflow.com/questions/1084328/Работа-с-excel-с-помощью-java-стандартными-библиотеками
+
 
 
         // Сохраним содержимое мапы в Базу данных
