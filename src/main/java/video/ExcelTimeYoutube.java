@@ -1,9 +1,5 @@
 package video;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
@@ -28,18 +24,6 @@ public class ExcelTimeYoutube {
     Date startTimeCorner;
     String description;
 
-
-//    Для чтения книги из файла можно применить следующий код:
-    public static HSSFWorkbook readWorkbook(String filename) {
-        try {
-            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filename));
-            HSSFWorkbook wb = new HSSFWorkbook(fs);
-            return wb;
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
 
     private  int getDefaultNumFileName() {
         //номер файла по умолчанию, с которым работаем
@@ -96,7 +80,9 @@ public class ExcelTimeYoutube {
 
 
     public static void main(String[] args) {
-        System.out.println(new ExcelTimeYoutube().getFromFile());
+
+        System.out.println(new ExcelTimeYoutube().getFromFile()
+        );
     }
 
     public  String getFromFile ()   {

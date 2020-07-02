@@ -16,20 +16,16 @@ public class SubtitleMap {
     }
 
     private void prepareMapIfNeed() {
-//        if (this.mapSrt == null) {
         boolean blnNeedPrepare = false;
 
         if (mapSrt.size()==0) {blnNeedPrepare = true;}
         if (blnNeedPrepare) {
             this.getMapFromFile();
         }
-            //проверка на что? - чтобы сразу можно было вызвать
-//        getFromDiapason()
     }
 
     public static void main(String[] args) {
         SubtitleMap subtitleMap = new SubtitleMap();
-//        subtitleMap.prepareMapIfNeed();
 //        subtitleMap.printMap();
         subtitleMap.testGetFromDiapason();
 

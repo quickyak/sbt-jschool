@@ -142,6 +142,13 @@ public class SubtitleTime {
         return (d);
     }
 
+    static Date getNullDateWithTime(Date dateOnlyTime) {
+        Long longTime = dateOnlyTime.getTime();
+        Long restTime = longTime % (24*60*60*1000);
+        Date d = new Date(restTime); //Этот конструктор принимает аргумент, равный количеству миллисекунд, прошедших с полуночи 1 января 1970 года. from https://coderlessons.com/tutorials/java-tekhnologii/uchit-java/java-data-i-vremia
+        return (d);
+    }
+
     //Возвращает время в миллисекундах
     private  Long getDateMs(String stringDate) {
         return getDate(stringDate).getTime() - getNullDate().getTime();

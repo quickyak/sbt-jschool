@@ -9,14 +9,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
+
+import static video.SubtitleTime.getNullDateWithTime;
 
 public class ExcelParser {
 
-    public static String parseColumn(String fileName, int columnIndex) {
-        //инициализируем потоки
-        String result = "";
+    public static Iterator<Row>  getRowIterator(String fileName,
+                                               int indexSheet) {
         InputStream inputStream = null;
         XSSFWorkbook workBook = null;
         try {
@@ -26,8 +26,17 @@ public class ExcelParser {
             e.printStackTrace();
         }
         //разбираем первый лист входного файла на объектную модель
-        Sheet sheet = workBook.getSheetAt(0);
-        Iterator<Row> it = sheet.iterator( );
+        Sheet sheet = workBook.getSheetAt(indexSheet);
+//        Iterator<Row> it = sheet.iterator( );
+        return sheet.iterator();
+    }
+
+    public static String getDatesFromColumn(String fileName, int columnIndex,
+                                            List <Date> dates) {
+        //инициализируем потоки
+        String result = "";
+        Iterator<Row> it = getRowIterator(fileName,0);
+
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
@@ -42,31 +51,19 @@ public class ExcelParser {
                         case STRING:
                             result += cell.getStringCellValue() + "=";
                             break;
-                        case NUMERIC:
-//                            result += "[" + cell.getNumericCellValue() + "]";
-                            break;
                         case FORMULA:
-//                            result += "[" + cell.getNumericCellValue() + "]";
-
                             Date dateCell;
                             try {
                                 dateCell = cell.getDateCellValue();  //пробую считать время
+                                //Так как здесь только время, то даты приведем к 1970 году
+                                Date dateOnlyTime = getNullDateWithTime(dateCell);
 
                                 //TODO если получилось считать записать значение в TreeMap с датами!
-
-
-
-                                System.out.println(dateCell);
-                                result += "[" + dateCell + "]";
+                                dates.add(dateOnlyTime);
                             } catch (IllegalStateException e) {
                                 e.printStackTrace();
                                 // не получилось - и ладно - значит пустое значение
                             }
-
-//
-                            break;
-                        default:
-                            result += "|";
                             break;
                     }
             } catch (  IllegalStateException e) {
@@ -74,7 +71,6 @@ public class ExcelParser {
             }
             result += "\n";
         }
-
         return result;
     }
 
@@ -82,17 +78,8 @@ public class ExcelParser {
     public static int getColumnIndexTimeYoutube(String fileName) {
         //инициализируем потоки
         int result = -1;
-        InputStream inputStream = null;
-        XSSFWorkbook workBook = null;
-        try {
-            inputStream = new FileInputStream(fileName);
-            workBook = new XSSFWorkbook(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //разбираем первый лист входного файла на объектную модель
-        Sheet sheet = workBook.getSheetAt(0);
-        Iterator<Row> it = sheet.iterator();
+        Iterator<Row> it = getRowIterator(fileName,0);
+
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
@@ -124,17 +111,8 @@ public class ExcelParser {
     public static String parse(String fileName) {
         //инициализируем потоки
         String result = "";
-        InputStream inputStream = null;
-        XSSFWorkbook workBook = null;
-        try {
-            inputStream = new FileInputStream(fileName);
-            workBook = new XSSFWorkbook(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //разбираем первый лист входного файла на объектную модель
-        Sheet sheet = workBook.getSheetAt(0);
-        Iterator<Row> it = sheet.iterator( );
+        Iterator<Row> it = getRowIterator(fileName,0);
+
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
@@ -166,20 +144,22 @@ public class ExcelParser {
             }
             result += "\n";
         }
-
         return result;
     }
 
     public static void main(String[] args){
+        System.out.println(getDates());
+    }
+
+    public static List<Date> getDates() {
         String fileNameLocal;
         fileNameLocal= new ExcelTimeYoutube().getFileName();
 
         int columnIndexTimeYoutube = getColumnIndexTimeYoutube(fileNameLocal);
-        System.out.println(ExcelParser.parseColumn(fileNameLocal,columnIndexTimeYoutube));
+        List<Date> dates = new ArrayList<>();
+
+        String temp = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
+        System.out.println(temp);
+        return dates;
     }
-
-
-
-
-
 }

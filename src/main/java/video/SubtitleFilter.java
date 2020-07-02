@@ -2,13 +2,13 @@ package video;
 
 import java.util.Date;
 
-public class Srt {
+public class SubtitleFilter {
     public static void main(String[] args) {
-        testDiapason();
+        filter();
 
     }
 
-    private static void testDiapason() {
+    public static void filter() {
         //  Вначале метод - получить субитры в диапазоне
         //  как по времени >= start  и <end
         //  00:24:19 до 00:26:09 -

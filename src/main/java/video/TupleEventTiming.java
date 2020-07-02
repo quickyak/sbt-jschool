@@ -2,14 +2,31 @@ package video;
 
 import java.util.Date;
 
-public class TableOneNote {
-    Integer numRow;
-    String block;
-    Date startTimeYoutube;
-    Date startTimeCorner;
-    String description;
+public class TupleEventTiming<S1 extends Integer, S2 extends Date> {
+    private S1 numRow;
+    private S2 timeYoutube;
+//    String block;
+//    Date timeCorner;
+//    String description;
 
-    // Файл - "/Users/yaroslav/Downloads/Video/ФУБ_Виктор/2020-06-30 Виктор 3_3часть модуль НЛП практик - SCORE - TOTE - Якоря/2020-06-30 Виктор.srt"
+    public TupleEventTiming(S1 numRow, S2 timeYoutube) {
+        this.numRow = numRow;
+        this.timeYoutube = timeYoutube;
+    }
+
+    public S1 getNumRow() {
+        return numRow;
+    }
+    //номер строки Excel файла (из OneNote)
+
+
+    public S2 getTimeYoutube() {
+        return timeYoutube;
+    }
+
+
+
+
 
     //методы
     //  считать из OneNote  (как бы предварительно не пришлось сохранять в Excel для обработки)
