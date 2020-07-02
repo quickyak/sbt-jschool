@@ -86,12 +86,25 @@ public class SubtitleMap {
 //            date1.compareTo(date2) > 0) {
 //                System.out.println("Date1 is after Date2");
 
+            // Основная доля субтитров
+            // S<=s (S - диапазон, s - субтитры)
             if (subtitleTime.getStartTime().compareTo(startTime) >= 0) {
                 isStart = true;
             }
+            // e<=E
             if (subtitleTime.getEndTime().compareTo(endTime) <= 0) {
                 isEnd = true;
             }
+
+            //Граничные субтитры по началу s<=S<=e
+            if ((subtitleTime.getStartTime().compareTo(startTime) <= 0) &&
+                 (subtitleTime.getEndTime().compareTo(startTime) >= 0))
+            {
+                isStart = true;
+                isEnd = true;
+            }
+
+
             if (isStart && isEnd) {
                 //в нужной записи
                 String entryText = getEntrySubtitle(entry, subtitleTime);

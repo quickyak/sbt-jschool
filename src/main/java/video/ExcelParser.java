@@ -41,7 +41,7 @@ public class ExcelParser {
         while (it.hasNext()) {
             Row row = it.next();
             Cell cell = row.getCell(columnIndex);
-            System.out.println(cell);
+//            System.out.println(cell);
 
             CellType cellType = cell.getCellType();
 
@@ -61,7 +61,7 @@ public class ExcelParser {
                                 //TODO если получилось считать записать значение в TreeMap с датами!
                                 dates.add(dateOnlyTime);
                             } catch (IllegalStateException e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                                 // не получилось - и ладно - значит пустое значение
                             }
                             break;
@@ -159,7 +159,7 @@ public class ExcelParser {
         List<Date> dates = new ArrayList<>();
 
         String temp = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
-        System.out.println(temp);
+//        System.out.println(temp);
         return dates;
     }
 }
