@@ -32,50 +32,56 @@ public class ExcelParser {
     }
 
     public static String getDatesFromColumn(String fileName, int columnIndex,
-                                            List <Date> dates) {
+                                            List<Date> dates) {
         //инициализируем потоки
         String result = "";
-        Iterator<Row> it = getRowIterator(fileName,0);
+        Iterator<Row> it = getRowIterator(fileName, 0);
 
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
-            Cell cell = row.getCell(columnIndex);
-//            System.out.println(cell);
-
-            CellType cellType = cell.getCellType();
-
             try {
-                    //перебираем возможные типы ячеек
-                    switch (cellType) {
-                        case STRING:
-                            result += cell.getStringCellValue() + "=";
-                            break;
-                        case FORMULA:
-                            Date dateCell;
-                            try {
-                                dateCell = cell.getDateCellValue();  //пробую считать время
-                                //Так как здесь только время, то даты приведем к 1970 году
-                                Date dateOnlyTime = getNullDateWithTime(dateCell);
+                Cell cell = row.getCell(columnIndex);
+                if (cell==null) {
+                    continue;
+                };
+                CellType cellType = cell.getCellType();
 
-                                //TODO если получилось считать записать значение в TreeMap с датами!
-                                dates.add(dateOnlyTime);
-                            } catch (IllegalStateException e) {
-//                                e.printStackTrace();
-                                // не получилось - и ладно - значит пустое значение
-                            }
-                            break;
-                    }
-            } catch (  IllegalStateException e) {
-                    e.printStackTrace();
+                //перебираем возможные типы ячеек
+                switch (cellType) {
+                    case STRING:
+                        result += cell.getStringCellValue() + "=";
+                        break;
+
+                    case FORMULA:
+                    case NUMERIC:
+                        Date dateCell;
+                        try {
+                            dateCell = cell.getDateCellValue();  //пробую считать время
+                            //Так как здесь только время, то даты приведем к 1970 году
+                            Date dateOnlyTime = getNullDateWithTime(dateCell);
+
+                            //TODO если получилось считать записать значение в TreeMap с датами!
+                            dates.add(dateOnlyTime);
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                            // не получилось - и ладно - значит пустое значение
+                        }
+                        break;
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
             }
             result += "\n";
         }
         return result;
     }
 
+
     //Найти столбец Время YouTube в первой строке первого листа
-    public static int getColumnIndexTimeYoutube(String fileName) {
+    public static int getColumnIndexBySearchString(String fileName, String searchString) {
+//        "Время YouTube"
+
         //инициализируем потоки
         int result = -1;
         Iterator<Row> it = getRowIterator(fileName,0);
@@ -92,7 +98,7 @@ public class ExcelParser {
                     //перебираем возможные типы ячеек
                     switch (cellType) {
                         case STRING:
-                            if (cell.getStringCellValue().equalsIgnoreCase("Время YouTube")) {
+                            if (cell.getStringCellValue().equalsIgnoreCase(searchString)) {
                                 result = cell.getColumnIndex();
                                 return result;
                             }
@@ -155,10 +161,15 @@ public class ExcelParser {
         String fileNameLocal;
         fileNameLocal= new ExcelTimeYoutube().getFileName();
 
-        int columnIndexTimeYoutube = getColumnIndexTimeYoutube(fileNameLocal);
+        int columnIndexTimeYoutube = getColumnIndexBySearchString(fileNameLocal, "Время YouTube");
+        System.out.println("columnIndexTimeYoutube Время YouTube  = " + columnIndexTimeYoutube);
+        int columnIndexTextDescription = getColumnIndexBySearchString(fileNameLocal, "Описание");
+        System.out.println("columnIndexTextDescription Описание = " + columnIndexTextDescription);
+
         List<Date> dates = new ArrayList<>();
 
-        String temp = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
+        String tempDates = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
+//        String tempText = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
 //        System.out.println(temp);
         return dates;
     }
