@@ -72,6 +72,10 @@ public class Auth {
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
 
         // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+        return new AuthorizationCodeInstalledApp(flow , localReceiver).authorize("user");
+    }
+
+    public String getYoutubeApi() {
+        return PropLoad.getYoutubeApi();
     }
 }
