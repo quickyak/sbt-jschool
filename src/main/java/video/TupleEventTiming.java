@@ -2,16 +2,18 @@ package video;
 
 import java.util.Date;
 
-public class TupleEventTiming<S1 extends Integer, S2 extends Date> {
+public class TupleEventTiming<S1 extends Integer, S2 extends Date, S3 extends String> {
     private S1 numRow;
     private S2 timeYoutube;
+    private S3 description;
 //    String block;
 //    Date timeCorner;
 //    String description;
 
-    public TupleEventTiming(S1 numRow, S2 timeYoutube) {
+    public TupleEventTiming(S1 numRow, S2 timeYoutube, S3 description) {
         this.numRow = numRow;
         this.timeYoutube = timeYoutube;
+        this.description = description;
     }
 
     public S1 getNumRow() {
@@ -22,6 +24,10 @@ public class TupleEventTiming<S1 extends Integer, S2 extends Date> {
 
     public S2 getTimeYoutube() {
         return timeYoutube;
+    }
+
+    public S3 getDescription() {
+        return description;
     }
 
 

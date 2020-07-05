@@ -9,82 +9,264 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
+import static video.SubtitleTime.getNullDate;
 import static video.SubtitleTime.getNullDateWithTime;
 
 public class ExcelParser {
+    private String fileName;
 
-    public static Iterator<Row>  getRowIterator(String fileName,
-                                               int indexSheet) {
-        InputStream inputStream = null;
-        XSSFWorkbook workBook = null;
-        try {
-            inputStream = new FileInputStream(fileName);
-            workBook = new XSSFWorkbook(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //разбираем первый лист входного файла на объектную модель
-        Sheet sheet = workBook.getSheetAt(indexSheet);
-//        Iterator<Row> it = sheet.iterator( );
-        return sheet.iterator();
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public static String getDatesFromColumn(String fileName, int columnIndex,
-                                            List<Date> dates) {
-        //инициализируем потоки
-        String result = "";
-        Iterator<Row> it = getRowIterator(fileName, 0);
+    public String getFileName() {
+        if ((this.fileName == null) || (this.fileName.length() == 0)) {
+            // если не было инициализровано ранее - инициализируем
+            setFileName(new ExcelTimeYoutube().getFileName());
+        }
+        return this.fileName;
+    }
+
+    public static void main(String[] args) {
+        int indexSheet;
+        indexSheet = 2;
+        System.out.println(new ExcelParser().getDates(indexSheet));
+        System.out.println(new ExcelParser().getDatesDescriptions(indexSheet));
+    }
+
+    public List<Date> getDates(int indexSheet) {
+        int columnIndexTimeYoutube = getColumnIndexTimeYoutube(indexSheet);
+        System.out.println("columnIndexTimeYoutube Время YouTube  = " + columnIndexTimeYoutube);
+
+        List<Date> dates = new ArrayList<>();
+
+        getDatesFromColumn(true,
+                indexSheet,
+                columnIndexTimeYoutube, dates);
+        return dates;
+    }
+
+    public List<Date> getDatesDescriptions(int indexSheet) {
+        int columnIndexTimeYoutube = getColumnIndexTimeYoutube(indexSheet);
+        System.out.println("columnIndexTimeYoutube Время YouTube  = " + columnIndexTimeYoutube);
+        int columnIndexTextDescription = getColumnIndexDescription(indexSheet);
+        System.out.println("columnIndexTextDescription Описание = " + columnIndexTextDescription);
+
+        List<Date> dates = new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
+
+        getDatesDescriptionsFromColumn(true,
+                indexSheet,
+                columnIndexTimeYoutube, dates,
+                columnIndexTextDescription, descriptions);
+        return dates;
+    }
+
+    public void getDatesFromColumn(
+            boolean blnSkipFirstRow
+            , int indexSheet
+            , int columnIndexDate
+            , List<Date> dates
+    ) {
+        //инициализируем потоки - получим итератор
+        Iterator<Row> it = getRowIterator(indexSheet);
+
+        //Пропустим первую строку - заголовков
+        if (blnSkipFirstRow) {
+            if (it.hasNext()) {
+                it.next();
+            }
+        }
 
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
+
+            Date dateOnlyTime = getNullDate();
+            boolean blnDate = false;
             try {
-                Cell cell = row.getCell(columnIndex);
-                if (cell==null) {
-                    continue;
-                };
-                CellType cellType = cell.getCellType();
-
-                //перебираем возможные типы ячеек
-                switch (cellType) {
-                    case STRING:
-                        result += cell.getStringCellValue() + "=";
-                        break;
-
-                    case FORMULA:
-                    case NUMERIC:
-                        Date dateCell;
-                        try {
-                            dateCell = cell.getDateCellValue();  //пробую считать время
-                            //Так как здесь только время, то даты приведем к 1970 году
-                            Date dateOnlyTime = getNullDateWithTime(dateCell);
-
-                            //TODO если получилось считать записать значение в TreeMap с датами!
-                            dates.add(dateOnlyTime);
-                        } catch (IllegalStateException e) {
-                            e.printStackTrace();
-                            // не получилось - и ладно - значит пустое значение
-                        }
-                        break;
-                }
+                Cell cell = row.getCell(columnIndexDate);
+                blnDate = getDateFromCell(cell, dateOnlyTime);
+//                if (blnDate) blnDate = dateOnlyTime.after(getNullDate()); //только ненулевые даты со временем
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
-            result += "\n";
+            if (blnDate) dates.add(dateOnlyTime);
+        }
+    }
+
+    public void getDatesDescriptionsFromColumn(
+            boolean blnSkipFirstRow
+            , int indexSheet
+            , int columnIndexDate
+            , List<Date> dates
+            , int columnIndexString
+            , List<String> descriptions
+    ) {
+        //инициализируем потоки - получим итератор
+        Iterator<Row> it = getRowIterator(indexSheet);
+
+        //Пропустим первую строку - заголовков
+        if (blnSkipFirstRow) {
+            if (it.hasNext()) {
+                it.next();
+            }
+        }
+
+        //проходим по всему листу
+        while (it.hasNext()) {
+            Row row = it.next();
+
+            Date dateOnlyTime = getNullDate();
+            boolean blnDate = false;
+            try {
+                Cell cell = row.getCell(columnIndexDate);
+                blnDate = getDateFromCell(cell, dateOnlyTime);
+//                if (blnDate) blnDate = dateOnlyTime.after(getNullDate()); //только ненулевые даты со временем
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+//            if (blnDate) dates.add(dateOnlyTime);
+
+            String sDescription = "";
+            boolean blnDescription = false;
+            try {
+                Cell cell = row.getCell(columnIndexString);
+                sDescription = getStringFromCell(cell);
+                blnDescription = (sDescription.length() > 0);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+//            if (blnDescription) descriptions.add(sDescription);
+
+            if (blnDate || blnDescription) {
+                //синхронизированные по индексу массивы
+                dates.add(dateOnlyTime);
+                descriptions.add(sDescription);
+            }
+
+        }
+    }
+
+    public boolean getDateFromCell(Cell cell, Date dateFromCell) {
+        Date dateOnlyTime = getNullDate();
+        boolean result = false;
+
+        try {
+            if (cell == null) {
+                dateFromCell.setTime(getNullDate().getTime());
+                return false;
+            }
+
+            CellType cellType = cell.getCellType();
+
+            //перебираем возможные типы ячеек
+            switch (cellType) {
+                case STRING:
+                    break;
+
+                case FORMULA:
+                case NUMERIC:
+                    try {
+                        Date dateCell = cell.getDateCellValue();  //пробую считать время
+                        //Так как здесь только время, то даты приведем к 1970 году
+                        dateOnlyTime = getNullDateWithTime(dateCell);
+                        result = true;
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                        // не получилось - и ладно - значит пустое значение
+                    }
+                    break;
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+        if (result) {
+            dateFromCell.setTime(dateOnlyTime.getTime());
         }
         return result;
     }
 
+    public String getStringFromCell(Cell cell) {
+//        boolean result = false;
+        String s = "";
 
-    //Найти столбец Время YouTube в первой строке первого листа
-    public static int getColumnIndexBySearchString(String fileName, String searchString) {
-//        "Время YouTube"
+        try {
+            if (cell == null) {
+                return s;
+            }
+
+            CellType cellType = cell.getCellType();
+
+            //перебираем возможные типы ячеек
+            switch (cellType) {
+                case STRING:
+                    try {
+                        s = cell.toString();
+//                        result = true;
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                        // не получилось - и ладно - значит пустое значение
+                    }
+                    break;
+
+                case FORMULA:
+                case NUMERIC:
+                    break;
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    public Iterator<Row> getRowIterator(int indexSheet) {
+        InputStream inputStream;
+        XSSFWorkbook workBook = null;
+        try {
+            inputStream = new FileInputStream(getFileName());
+            workBook = new XSSFWorkbook(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //разбираем indexSheet лист входного файла на объектную модель (начинается с 0 индексы)
+        Sheet sheet = workBook.getSheetAt(indexSheet);
+        return sheet.iterator();
+    }
+
+    public void getEventTimingList(
+            List<TupleEventTiming<Integer, Date, String>> tuplesEventTiming
+    ) {
+        int indexSheet = 2;
+//
+//        TupleEventTiming tupleEventTiming;
+//        tupleEventTiming = new TupleEventTiming<Integer, Date, String>(cell.getRowIndex(), dateOnlyTime, "Тест");
+//        tuplesEventTiming.add(tupleEventTiming);
+//
+//        getDatesDescriptions()
+    }
+
+    public int getColumnIndexTimeYoutube(int indexSheet) {
+        return getColumnIndexBySearchString(indexSheet, "Время YouTube");
+    }
+
+    public int getColumnIndexDescription(int indexSheet) {
+        return getColumnIndexBySearchString(indexSheet, "Описание");
+    }
+
+    //Найти столбец searchString в первой строке первого листа
+    public int getColumnIndexBySearchString(int indexSheet, String searchString) {
+//        searchString = "Время YouTube"
 
         //инициализируем потоки
         int result = -1;
-        Iterator<Row> it = getRowIterator(fileName,0);
+        Iterator<Row> it = getRowIterator(indexSheet);
 
         //проходим по всему листу
         while (it.hasNext()) {
@@ -104,73 +286,11 @@ public class ExcelParser {
                             }
                             break;
                     }
-                } catch (  IllegalStateException e) {
+                } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
             }
         }
         return result;
-    }
-
-
-
-    public static String parse(String fileName) {
-        //инициализируем потоки
-        String result = "";
-        Iterator<Row> it = getRowIterator(fileName,0);
-
-        //проходим по всему листу
-        while (it.hasNext()) {
-            Row row = it.next();
-            Iterator<Cell> cells = row.iterator();
-            while (cells.hasNext()) {
-                Cell cell = cells.next();
-                CellType cellType = cell.getCellType();
-
-                try {
-                    //перебираем возможные типы ячеек
-                    switch (cellType) {
-                        case STRING:
-                            result += cell.getStringCellValue() + "=";
-                            break;
-                        case NUMERIC:
-                            result += "[" + cell.getNumericCellValue() + "]";
-                            break;
-                        case FORMULA:
-//                            result += "[" + cell.getNumericCellValue() + "]";
-                            result += "[" + cell.getCellFormula() + "]";
-                            break;
-                        default:
-                            result += "|";
-                            break;
-                    }
-                } catch (  IllegalStateException e) {
-                    e.printStackTrace();
-                }
-            }
-            result += "\n";
-        }
-        return result;
-    }
-
-    public static void main(String[] args){
-        System.out.println(getDates());
-    }
-
-    public static List<Date> getDates() {
-        String fileNameLocal;
-        fileNameLocal= new ExcelTimeYoutube().getFileName();
-
-        int columnIndexTimeYoutube = getColumnIndexBySearchString(fileNameLocal, "Время YouTube");
-        System.out.println("columnIndexTimeYoutube Время YouTube  = " + columnIndexTimeYoutube);
-        int columnIndexTextDescription = getColumnIndexBySearchString(fileNameLocal, "Описание");
-        System.out.println("columnIndexTextDescription Описание = " + columnIndexTextDescription);
-
-        List<Date> dates = new ArrayList<>();
-
-        String tempDates = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
-//        String tempText = ExcelParser.getDatesFromColumn(fileNameLocal,columnIndexTimeYoutube,dates);
-//        System.out.println(temp);
-        return dates;
     }
 }

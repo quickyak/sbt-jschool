@@ -8,4 +8,6 @@ public class PropPath {
     public  static String getPath() {
         return path;
     }
+
+    //source from https://mkyong.com/java/java-properties-file-examples/
 }
