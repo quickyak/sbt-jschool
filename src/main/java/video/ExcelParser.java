@@ -35,8 +35,8 @@ public class ExcelParser {
     public static void main(String[] args) {
         int indexSheet;
         indexSheet = 2;
-        System.out.println(new ExcelParser().getDates(indexSheet));
-        System.out.println(new ExcelParser().getDatesDescriptions(indexSheet));
+//        System.out.println(new ExcelParser().getDates(indexSheet));
+        System.out.println(new ExcelParser().getDescriptionForYoutubeVideo(indexSheet));
     }
 
     public List<Date> getDates(int indexSheet) {
@@ -51,7 +51,7 @@ public class ExcelParser {
         return dates;
     }
 
-    public List<Date> getDatesDescriptions(int indexSheet) {
+    public String getDescriptionForYoutubeVideo(int indexSheet) {
         int columnIndexTimeYoutube = getColumnIndexTimeYoutube(indexSheet);
         System.out.println("columnIndexTimeYoutube Время YouTube  = " + columnIndexTimeYoutube);
         int columnIndexTextDescription = getColumnIndexDescription(indexSheet);
@@ -64,7 +64,50 @@ public class ExcelParser {
                 indexSheet,
                 columnIndexTimeYoutube, dates,
                 columnIndexTextDescription, descriptions);
-        return dates;
+
+        String sTime;
+        boolean isNextDateAfterNullDate = false;
+        StringBuilder descriptionForYoutubeVideo = new StringBuilder();
+
+        for (int i = 0; i < dates.size(); i++) {
+
+            if (dates.get(i).after(getNullDate())) {
+                sTime = SubtitleTime.timeToStringShort(dates.get(i));
+            } else {
+                sTime ="";
+            }
+
+            if (sTime.length() == 0) {
+                if (!isNextDateAfterNullDate) {
+                    //по факту последнее нулевое время перед первым ненулевым
+                    if ((i+1) < dates.size()) {
+                        if (dates.get(i + 1).after(getNullDate())) {
+                            sTime = SubtitleTime.timeToStringShort(dates.get(i));
+                            isNextDateAfterNullDate = true; //один раз должно сработать
+                        }
+                    }
+                }
+            }
+
+            descriptionForYoutubeVideo.append(sTime).append(" ").append(descriptions.get(i)).append("\n");
+        }
+        return descriptionForYoutubeVideo.toString();
+
+//        List<TupleEventTiming<Integer, Date, String>> tuplesEventTiming;
+//        //TODO
+//        TupleEventTiming
+    }
+
+    public void getEventTimingList(
+            List<TupleEventTiming<Integer, Date, String>> tuplesEventTiming
+    ) {
+        int indexSheet = 2;
+//
+//        TupleEventTiming tupleEventTiming;
+//        tupleEventTiming = new TupleEventTiming<Integer, Date, String>(cell.getRowIndex(), dateOnlyTime, "Тест");
+//        tuplesEventTiming.add(tupleEventTiming);
+//
+//        getDatesDescriptions()
     }
 
     public void getDatesFromColumn(
@@ -149,7 +192,6 @@ public class ExcelParser {
                 dates.add(dateOnlyTime);
                 descriptions.add(sDescription);
             }
-
         }
     }
 
@@ -236,20 +278,9 @@ public class ExcelParser {
             e.printStackTrace();
         }
         //разбираем indexSheet лист входного файла на объектную модель (начинается с 0 индексы)
+        assert workBook != null;
         Sheet sheet = workBook.getSheetAt(indexSheet);
         return sheet.iterator();
-    }
-
-    public void getEventTimingList(
-            List<TupleEventTiming<Integer, Date, String>> tuplesEventTiming
-    ) {
-        int indexSheet = 2;
-//
-//        TupleEventTiming tupleEventTiming;
-//        tupleEventTiming = new TupleEventTiming<Integer, Date, String>(cell.getRowIndex(), dateOnlyTime, "Тест");
-//        tuplesEventTiming.add(tupleEventTiming);
-//
-//        getDatesDescriptions()
     }
 
     public int getColumnIndexTimeYoutube(int indexSheet) {
@@ -271,9 +302,7 @@ public class ExcelParser {
         //проходим по всему листу
         while (it.hasNext()) {
             Row row = it.next();
-            Iterator<Cell> cells = row.iterator();
-            while (cells.hasNext()) {
-                Cell cell = cells.next();
+            for (Cell cell : row) {
                 CellType cellType = cell.getCellType();
 
                 try {

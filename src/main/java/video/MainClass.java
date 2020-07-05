@@ -7,7 +7,9 @@ import static video.SubtitleTime.getNullDate;
 
 public class MainClass {
     public static void main(String[] args){
+
         new MainClass().getSubtitleByEventTiming(0); //200
+
     }
 
     private void getSubtitleByEventTiming(int maxLength) {
