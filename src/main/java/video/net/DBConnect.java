@@ -1,8 +1,6 @@
 package video.net;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
@@ -12,7 +10,6 @@ import duck.reg.pack.PropLoad;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.sql.SQLException;
 
 //import com.google.api.client.util.Lists;
 
@@ -43,19 +40,19 @@ public class DBConnect {
 
     private String getApiKey() {
         // you can get it from https://console.cloud.google.com/apis/credentials
-        return PropLoad.getYoutubeApi();
+        return new PropLoad().getYoutubeApiKey();
     }
 
-    public String getYouTubeDescription() throws SQLException, IOException{
+    public String getYouTubeDescription(){
         return getYouTubeSnippet("description");
     }
 
-    public String getYouTubeTitle() throws SQLException, IOException{
+    public String getYouTubeTitle() {
         return getYouTubeSnippet("title");
     }
 
 
-    public String getYouTubeSnippet(String fieldName) throws SQLException, IOException{
+    public String getYouTubeSnippet(String fieldName) {
         String result = "";
         try {
 
@@ -147,15 +144,14 @@ public class DBConnect {
             System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
-        } finally {
-            return result;
         }
+        return result;
     }
 
     /*
      * Prompt the user to enter a keyword tag.
      */
-    private static String getTagFromUser() throws IOException {
+    private static String getTagFromUser() {
 
 //        String keyword = "";
 //
@@ -170,12 +166,9 @@ public class DBConnect {
         return "Java";
     }
 
-    public String getYouTubeStatistics() throws SQLException, IOException{
+    public String getYouTubeStatistics() {
         try {
-            YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
-                @Override
-                public void initialize(HttpRequest request) throws IOException {
-                }
+            YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, request -> {
             }).setApplicationName("APP_ID").build();
 
             String apiKey =  getApiKey();

@@ -76,6 +76,6 @@ public class Auth {
     }
 
     public String getYoutubeApi() {
-        return PropLoad.getYoutubeApi();
+        return new PropLoad().getYoutubeApiKey();
     }
 }
