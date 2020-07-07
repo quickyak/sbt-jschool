@@ -5,8 +5,8 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.api.services.youtube.model.VideoSnippet;
-import duck.reg.pack.Auth;
-import duck.reg.pack.PropLoad;
+import video.sec.Auth;
+import video.sec.PropLoad;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -41,6 +41,10 @@ public class DBConnect {
     private String getApiKey() {
         // you can get it from https://console.cloud.google.com/apis/credentials
         return new PropLoad().getYoutubeApiKey();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new DBConnect().getYouTubeDescription());
     }
 
     public String getYouTubeDescription(){

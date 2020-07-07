@@ -1,4 +1,4 @@
-package video;
+package video.subtitle;
 
 import hometask03.FileWorker;
 
@@ -18,7 +18,7 @@ public class SubtitleFile {
     }
 
     private void setFileName(int intNumFileName) throws FileNotFoundException {
-        String fileNameLocal = "";
+        String fileNameLocal;
 
         switch (intNumFileName) {
             case 0:
@@ -92,12 +92,8 @@ public class SubtitleFile {
     }
 
     public  String getTextFromFile ()   {
-        String result = new FileWorker().getTextFromFile(getFileName());
-
 //        System.out.println("Содержимое файла " + getFileName());
-//        System.out.println(result);
-
-        return result;
+        return new FileWorker().getTextFromFile(getFileName());
     }
 
 

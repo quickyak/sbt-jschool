@@ -1,4 +1,4 @@
-package duck.reg.pack;
+package video.sec;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +14,11 @@ public class PropLoad {
     }
 
     public static void main(String[] args) {
-        new PropLoad().printAll();
+
+//        new PropLoad().printAll();
+        System.out.println(new PropLoad().getYoutubeApiKey());
+        System.out.println(getPath());
+
     }
 
     private void printAll() {
@@ -58,7 +62,7 @@ public class PropLoad {
 
         // get the property value and print it out
         result = properties.getProperty(nameProperty);
-        System.out.println(properties.getProperty(nameProperty));
+//        System.out.println(properties.getProperty(nameProperty));
         return result;
     }
 

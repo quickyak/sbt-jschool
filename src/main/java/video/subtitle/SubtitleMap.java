@@ -1,4 +1,4 @@
-package video;
+package video.subtitle;
 
 import java.util.*;
 
@@ -67,11 +67,11 @@ public class SubtitleMap {
 
         prepareMapIfNeed();
 
-        String result;
-        result = SubtitleTime.timeToStringShort(startTime)
+        StringBuilder result;
+        result = new StringBuilder(SubtitleTime.timeToStringShort(startTime)
                 + " --> "
                 + SubtitleTime.timeToStringShort(endTime)
-                + "\n\n";
+                + "\n\n");
 
 
         //проход по Map
@@ -108,12 +108,12 @@ public class SubtitleMap {
             if (isStart && isEnd) {
                 //в нужной записи
                 String entryText = getEntrySubtitle(entry, subtitleTime);
-                result += entryText + "\n"; //? concat
+                result.append(entryText).append("\n");
 //                System.out.println(entryText);
             }
         }
 
-        return result;
+        return result.toString();
 
     }
 
@@ -194,7 +194,7 @@ public class SubtitleMap {
                     //empty string
                     //populate map
                     mapSrt.put(key,
-                            new TupleSrt(first, second)
+                            new TupleSrt<>(first, second)
                     );
                     break;
             }

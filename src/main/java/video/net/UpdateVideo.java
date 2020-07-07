@@ -21,7 +21,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.common.collect.Lists;
-import duck.reg.pack.Auth;
+import video.sec.Auth;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class UpdateVideo {
             // provided tag to the list of tags associated with the video.
             List<String> tags = snippet.getTags();
             if (tags == null) {
-                tags = new ArrayList<String>(1);
+                tags = new ArrayList<>(1);
                 snippet.setTags(tags);
             }
             tags.add(tag);
@@ -122,7 +122,7 @@ public class UpdateVideo {
     /*
      * Prompt the user to enter a keyword tag.
      */
-    private static String getTagFromUser() throws IOException {
+    private static String getTagFromUser() {
 
 //        String keyword = "";
 //
@@ -141,7 +141,7 @@ public class UpdateVideo {
     /*
      * Prompt the user to enter a video ID.
      */
-    private static String getVideoIdFromUser() throws IOException {
+    private static String getVideoIdFromUser() {
 
 //        String videoId = "";
 //

@@ -1,9 +1,12 @@
 package video;
 
+import video.subtitle.SubtitleFile;
+import video.subtitle.SubtitleMap;
+
 import java.util.Date;
 import java.util.List;
 
-import static video.SubtitleTime.getNullDate;
+import static video.subtitle.SubtitleTime.getNullDate;
 
 public class MainClass {
     public static void main(String[] args){

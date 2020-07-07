@@ -1,4 +1,4 @@
-package video;
+package video.subtitle;
 
 public class TupleSrt<S1 extends String, S2 extends String> {
     private S1 first;

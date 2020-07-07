@@ -1,4 +1,4 @@
-package video;
+package video.subtitle;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,8 +35,8 @@ public class SubtitleTime {
     }
 
     public Date getMiddleTime() {
-        Long delta = endTime.getTime() - startTime.getTime();
-        return new Date(startTime.getTime()+(Long)delta/2);
+        long delta = endTime.getTime() - startTime.getTime();
+        return new Date(startTime.getTime()+ delta /2);
     }
 
     @Override
@@ -122,15 +122,15 @@ public class SubtitleTime {
         }
     }
 
-    static Date getNullDate() {
+    public static Date getNullDate() {
         return (getNullDateWithTime(0,0,0,0));
     }
 
-    static Date getNullDateWithTime(int hours, int minutes, int seconds) {
+    public static Date getNullDateWithTime(int hours, int minutes, int seconds) {
         return (getNullDateWithTime(hours,minutes,seconds,0));
     }
 
-    static Date getNullDateWithTime(int hours, int minutes, int seconds, int millis) {
+    public static Date getNullDateWithTime(int hours, int minutes, int seconds, int millis) {
         Date d = new Date(0L); //Этот конструктор принимает аргумент, равный количеству миллисекунд, прошедших с полуночи 1 января 1970 года. from https://coderlessons.com/tutorials/java-tekhnologii/uchit-java/java-data-i-vremia
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(d);
@@ -142,11 +142,10 @@ public class SubtitleTime {
         return (d);
     }
 
-    static Date getNullDateWithTime(Date dateOnlyTime) {
-        Long longTime = dateOnlyTime.getTime();
-        Long restTime = longTime % (24*60*60*1000);
-        Date d = new Date(restTime); //Этот конструктор принимает аргумент, равный количеству миллисекунд, прошедших с полуночи 1 января 1970 года. from https://coderlessons.com/tutorials/java-tekhnologii/uchit-java/java-data-i-vremia
-        return (d);
+    public static Date getNullDateWithTime(Date dateOnlyTime) {
+        long longTime = dateOnlyTime.getTime();
+        long restTime = longTime % (24*60*60*1000);
+        return (new Date(restTime));
     }
 
     //Возвращает время в миллисекундах

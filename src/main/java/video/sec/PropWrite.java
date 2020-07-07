@@ -1,4 +1,4 @@
-package duck.reg.pack;
+package video.sec;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ public class PropWrite {
 
     public static void main(String[] args) {
 //        new PropWrite().writeNew();
-        new PropWrite().append("yt.test", "test Youtube value");
+        new PropWrite().appendTest();
 
     }
 
@@ -26,7 +26,6 @@ public class PropWrite {
             properties.setProperty("db.url", "localhost");
             properties.setProperty("db.user", "mkyong");
             properties.setProperty("db.password", "password");
-            properties.setProperty("yt.apikey223", "AIzaSyDe9uKNLiuvdIkq9ZBc1G8wJUKjLBeb4o4_223");
             properties.setProperty("yt.videopath", "https://youtu.be/BQidh8H0fMo");
             properties.setProperty("yt.videoid", "BQidh8H0fMo");
 
@@ -43,6 +42,8 @@ public class PropWrite {
 
     private  void append(String nameProp, String valueProp) {
         Properties propertiesIn = new PropLoad().getPropertiesFromFile();
+        String oldValue = propertiesIn.getProperty(nameProp,"");
+        if (oldValue.equals(valueProp)) return; //значения совпадают - не будем добавлять то же значение ..
 
 
         //        try (OutputStream output = new FileOutputStream( "path/to/config.properties")) {
@@ -64,5 +65,9 @@ public class PropWrite {
         } catch (IOException io) {
             io.printStackTrace();
         }
+    }
+
+    private void appendTest(){
+        //append("yt.apikey", "AIza.."); //apikey value in - OneNote
     }
 }

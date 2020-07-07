@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import video.subtitle.SubtitleTime;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,8 +15,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import static video.SubtitleTime.getNullDate;
-import static video.SubtitleTime.getNullDateWithTime;
+import static video.subtitle.SubtitleTime.getNullDate;
+import static video.subtitle.SubtitleTime.getNullDateWithTime;
 
 public class ExcelParser {
     private String fileName;
